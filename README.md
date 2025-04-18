@@ -1,6 +1,6 @@
 # Project Video
-https://www.youtube.com/watch?v=_JmBoKif-NY
-https://www.youtube.com/watch?v=-V1Y1h_10rA
+- https://www.youtube.com/watch?v=_JmBoKif-NY
+- https://www.youtube.com/watch?v=-V1Y1h_10rA
 
 # React + TypeScript + Vite
 
