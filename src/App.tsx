@@ -11,6 +11,7 @@ import GetUsersPage from "./pages/admin/GetUsersPage";
 import GetCompaniesPage from "./pages/admin/GetCompaniesPage";
 import CreateCompanyPage from "./pages/admin/CreateCompanyPage";
 import CreateUserPage from "./pages/admin/CreateUserPage";
+import Authorization from "./hooks/Authorization";
 
 function App() {
   return (
@@ -22,36 +23,53 @@ function App() {
           <Route path="/auth-login" element={<LoginPage />} />
           <Route path="/test" element={<TestPage />} />
 
-          {/* ADMIN */}
-          <Route path="/admin/dashboard" element={<div>Admin Dashboard</div>} />
-          <Route path="/admin/settings" element={<div>Admin Settings</div>} />
-          <Route path="/admin/users" element={<GetUsersPage />} />
-          <Route path="/admin/users/create" element={<CreateUserPage />} />
-          <Route path="/admin/companies" element={<GetCompaniesPage />} />
+          {/* ADMIN ROUTES */}
+          <Route element={<Authorization allowedRoles={["ROLE_ADMIN"]} />}>
+            <Route
+              path="/admin/dashboard"
+              element={<div>Admin Dashboard</div>}
+            />
+            <Route path="/admin/settings" element={<div>Admin Settings</div>} />
+            <Route path="/admin/users" element={<GetUsersPage />} />
+            <Route path="/admin/users/create" element={<CreateUserPage />} />
+            <Route path="/admin/companies" element={<GetCompaniesPage />} />
+            <Route
+              path="/admin/companies/create"
+              element={<CreateCompanyPage />}
+            />
+            <Route
+              path="/admin/invoices"
+              element={<div>Faturaların hepsini listele</div>}
+            />
+            <Route
+              path="/admin/roles/create"
+              element={<div>Rol Oluştur</div>}
+            />
+            <Route path="/admin/roles" element={<div>Rol Listele</div>} />
+          </Route>
+
+          {/* USER ROUTES */}
+          <Route element={<Authorization allowedRoles={["ROLE_USER"]} />}>
+            <Route path="/user/dashboard" element={<div>User Dashboard</div>} />
+            <Route path="/user/profile" element={<div>User Profile</div>} />
+            <Route
+              path="/user/invoices/sent-invoice-list"
+              element={<SentInvoiceListPage />}
+            />
+            <Route
+              path="/user/invoices/recive-invoice-list"
+              element={<ReciveInvoiceListPage />}
+            />
+            <Route
+              path="/user/invoices/invoice-create"
+              element={<InvoiceCreatePage />}
+            />
+          </Route>
+
+          {/* UNAUTHORIZED */}
           <Route
-            path="/admin/companies/create"
-            element={<CreateCompanyPage />}
-          />
-          <Route
-            path="/admin/invoices"
-            element={<div>Faturaların hepsini listele</div>}
-          />
-          <Route path="/admin/roles/create" element={<div>Rol Oluştur</div>} />
-          <Route path="/admin/roles" element={<div>Rol Listele</div>} />
-          {/* USER */}
-          <Route path="/user/dashboard" element={<div>User Dashboard</div>} />
-          <Route path="/user/profile" element={<div>User Profile</div>} />
-          <Route
-            path="/user/invoices/sent-invoice-list"
-            element={<SentInvoiceListPage />}
-          />
-          <Route
-            path="/user/invoices/recive-invoice-list"
-            element={<ReciveInvoiceListPage />}
-          />
-          <Route
-            path="/user/invoices/invoice-create"
-            element={<InvoiceCreatePage />}
+            path="/unauthorized"
+            element={<div>Bu sayfaya erişim yetkiniz yok.</div>}
           />
 
           {/* 404 */}
